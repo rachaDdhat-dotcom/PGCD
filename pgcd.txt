@@ -1,24 +1,31 @@
 #include <stdio.h>
 
-// Fonction pour calculer le PGCD de deux entiers
-int pgcd(int a, int b) {
-    while (b != 0) {
-        int reste = a % b;
-        a = b;
-        b = reste;
-    }
-    return a;
-}
-
 int main() {
-    int x, y;
+    int a, b, x, y, r, etape = 1;
 
-    printf("Entrez le premier entier : ");
-    scanf("%d", &x);
-    printf("Entrez le second entier : ");
-    scanf("%d", &y);
+    // Lire les deux nombres
+    printf("Entrez le premier nombre : ");
+    scanf("%d", &a);
+    printf("Entrez le deuxième nombre : ");
+    scanf("%d", &b);
 
-    printf("Le PGCD de %d et %d est : %d\n", x, y, pgcd(x, y));
+    // Sauvegarder les valeurs initiales
+    x = a;
+    y = b;
+
+    printf("\nCalcul du PGCD(%d, %d)\n\n", x, y);
+
+    // Algorithme d’Euclide avec affichage des étapes
+    while (b != 0) {
+        r = a % b;
+        printf("Étape %d : %d = %d * (%d) + %d\n", etape, a, b, a / b, r);
+        a = b;
+        b = r;
+        etape++;
+    }
+
+    // Résultat final
+    printf("\nLe PGCD de %d et %d est : %d\n", x, y, a);
 
     return 0;
 }
