@@ -30,9 +30,7 @@ int main() {
     // Vérifier si les nombres sont premiers entre eux
     if (a == 1) {
         printf("✅ Les nombres %d et %d sont premiers entre eux.\n", x, y);
-    } else {
-        printf("ℹ️  Les nombres %d et %d ne sont pas premiers entre eux.\n", x, y);
-    }
-
+    } 
     return 0;
 }
+
