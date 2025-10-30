@@ -1,36 +1,52 @@
 #include <stdio.h>
 
-int main() {
-    int a, b, x, y, r, etape = 1;
+// Fonction pour calculer le PGCD et les coefficients de Bézout
+int bezout(int a, int b, int *u, int *v) {
+    int r0 = a, r1 = b;
+    int u0 = 1, u1 = 0;
+    int v0 = 0, v1 = 1;
+    int q, r, temp;
 
-    // Lire les deux nombres
+    printf("\n--- Étapes de la division euclidienne ---\n");
+    int etape = 1;
+
+    while (r1 != 0) {
+        q = r0 / r1;
+        r = r0 % r1;
+
+        printf("Étape %d : %d = %d * (%d) + %d\n", etape, r0, r1, q, r);
+
+        temp = r0; r0 = r1; r1 = r;  // mise à jour des restes
+
+        temp = u0 - q * u1; u0 = u1; u1 = temp; // mise à jour de u
+        temp = v0 - q * v1; v0 = v1; v1 = temp; // mise à jour de v
+
+        etape++;
+    }
+
+    *u = u0;
+    *v = v0;
+    return r0;
+}
+
+int main() {
+    int a, b, pgcd, u, v;
+
     printf("Entrez le premier nombre : ");
     scanf("%d", &a);
     printf("Entrez le deuxième nombre : ");
     scanf("%d", &b);
 
-    // Sauvegarder les valeurs initiales
-    x = a;
-    y = b;
+    printf("\nCalcul du PGCD(%d, %d)\n", a, b);
 
-    printf("\nCalcul du PGCD(%d, %d)\n\n", x, y);
+    pgcd = bezout(a, b, &u, &v);
 
-    // Algorithme d’Euclide avec affichage des étapes
-    while (b != 0) {
-        r = a % b;
-        printf("Étape %d : %d = %d * (%d) + %d\n", etape, a, b, a / b, r);
-        a = b;
-        b = r;
-        etape++;
-    }
+    printf("\n--- Résultats ---\n");
+    printf("PGCD(%d, %d) = %d\n", a, b, pgcd);
+    printf("Coefficients de Bézout : u = %d , v = %d\n", u, v);
+    printf("Vérification : %d*(%d) + %d*(%d) = %d\n", a, u, b, v, a*u + b*v);
 
-    // Résultat final
-    printf("\nLe PGCD de %d et %d est : %d\n", x, y, a);
-
-    // Vérifier si les nombres sont premiers entre eux
-    if (a == 1) {
-        printf("✅ Les nombres %d et %d sont premiers entre eux.\n", x, y);
-    } 
+    if (pgcd == 1)
+        printf("✅ Les nombres %d et %d sont premiers entre eux.\n", a, b);
     return 0;
 }
-
